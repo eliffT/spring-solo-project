@@ -5,17 +5,6 @@ spring:
   application:
     name: Demo project for Spring Boot
 
-  datasource:
-    url: jdbc:postgresql://localhost:5432/management
-    username: postgres
-    password: postgres
-    driver-class-name: org.postgresql.Driver
-
-  jpa:
-    hibernate:
-      ddl-auto: create
-    show-sql: true
-
 
 server:
   port: 8081
