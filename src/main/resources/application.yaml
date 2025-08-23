@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: Demo project for Spring Boot
+
+server:
+  port: 8081
