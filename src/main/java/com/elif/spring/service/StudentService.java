@@ -14,6 +14,9 @@ public class StudentService {
     private final StudentRepository studentRepository;
 
     public Student saveStudent(Student student){
+        if(student.getBookList() != null){
+            student.getBookList().forEach(book -> book.setStudent(student));
+        }
         return studentRepository.save(student);
     }
 
