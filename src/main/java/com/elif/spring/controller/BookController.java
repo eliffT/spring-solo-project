@@ -8,19 +8,19 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/book")
+@RequestMapping("/books")
 @RequiredArgsConstructor
 public class BookController {
 
     private final BookService bookService;
 
-    @PostMapping
+    @PostMapping("/add")
     public Book save(@RequestBody Book book){
         return bookService.save(book);
 
     }
 
-    @GetMapping
+    @GetMapping("/list")
     public List<Book> listAllBook(){
         return bookService.getAllBook();
     }

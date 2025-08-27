@@ -3,6 +3,9 @@ package com.elif.spring.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -21,5 +24,13 @@ public class Student {
 
     @Column(unique = true)
     private String email;
+
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
+    private List<Book> bookList =  new ArrayList<>();
+
+    public void addBook(Book book) {
+        bookList.add(book);
+        book.setStudent(this);
+    }
 
 }
