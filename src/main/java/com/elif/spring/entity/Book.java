@@ -1,7 +1,9 @@
 package com.elif.spring.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,10 +20,5 @@ public class Book {
     private Long id;
     private String title;
     private String author;
-
-    @ManyToOne( fetch = FetchType.LAZY)
-    @JoinColumn(name = "student_id")    // owner side - FK
-    private Student student;
-
 
 }
