@@ -21,6 +21,7 @@ public class Book {
 
     @ManyToOne( fetch = FetchType.LAZY)
     @JoinColumn(name = "student_id")    // owner side - FK
+    @JsonBackReference      // Alt sınıf (geri-ters) serileştirmeden kullanır ve sonsuz döngü sorunu çözülür.
     private Student student;
 
 

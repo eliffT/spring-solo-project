@@ -1,5 +1,6 @@
 package com.elif.spring.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -26,6 +27,7 @@ public class Student {
     private String email;
 
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
+    @JsonManagedReference       // Üst sınıf (ileri) serileştirme işlemini yönetir.
     private List<Book> bookList =  new ArrayList<>();
 
     public void addBook(Book book) {
