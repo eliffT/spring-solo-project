@@ -50,6 +50,15 @@ public class EmployeeController {
         return employeeService.findByDepartment(department);
     }
 
+    @GetMapping("/salary")
+    public List<Employee> findSalaryGreaterThan(@RequestParam(value = "amount") double amount) {
+        return employeeService.findSalaryGreaterThan(amount);
+    }
 
+
+    @GetMapping("/department")
+    public List<Employee> findDepartmentByQuery(@RequestParam(value = "department") String dept){
+        return employeeService.findDepartmentByQuery(dept);
+    }
 
 }
