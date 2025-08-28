@@ -19,7 +19,7 @@ public class EmployeeController {
         return employeeService.findAll();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/get/{id}")
     public Employee findById(@PathVariable(name = "id") Long id) {
         return employeeService.findById(id);
     }
@@ -29,14 +29,25 @@ public class EmployeeController {
         return employeeService.save(employee);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/put/{id}")
     public Employee update(@PathVariable(name = "id") Long id, @RequestBody Employee employee) {
         return employeeService.update(id, employee);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/del/{id}")
     public void delete(@PathVariable(name = "id") Long id) {
         employeeService.delete(id);
+    }
+
+
+    @GetMapping("/name/{name}")
+    public List<Employee> findByNameContaining(@PathVariable("name") String name) {
+        return employeeService.findByNameContaining(name);
+    }
+
+    @GetMapping("/dept/{department}")
+    public List<Employee> findByDepartment(@PathVariable("department") String department) {
+        return employeeService.findByDepartment(department);
     }
 
 
