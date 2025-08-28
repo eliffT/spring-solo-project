@@ -45,4 +45,12 @@ public class EmployeeService {
         }
         return null;
     }
+
+    public List<Employee> findByNameContaining(String name) {
+        return  employeeRepository.findByNameContaining(name);
+    }
+
+    public List<Employee> findByDepartment(String department) {
+        return employeeRepository.findByDepartment(department);
+    }
 }
