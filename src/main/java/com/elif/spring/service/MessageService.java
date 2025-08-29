@@ -1,6 +1,6 @@
 package com.elif.spring.service;
 
-import com.elif.spring.MessagePrinter;
+import com.elif.spring.entity.MessagePrinter;
 import org.springframework.stereotype.Service;
 
 @Service

@@ -1,10 +1,13 @@
 package com.elif.spring.service;
 
+import com.elif.spring.dto.request.EmployeeRequest;
+import com.elif.spring.dto.response.EmployeeResponse;
 import com.elif.spring.entity.Employee;
 import com.elif.spring.repository.EmployeeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,16 +17,38 @@ public class EmployeeService {
 
     private final EmployeeRepository employeeRepository;
 
-    public Employee save(Employee employee) {
-        return employeeRepository.save(employee);
+    public EmployeeResponse save(EmployeeRequest request) {
+        Employee employee = new Employee();
+        employee.setName(request.getName());
+        employee.setId(request.getId());
+        employee.setDepartment(request.getDepartment());
+        employee.setSalary(request.getSalary());
+        employee.setEmail(request.getEmail());
+        employeeRepository.save(employee);
+        EmployeeResponse employeeResponse = new EmployeeResponse();
+        employeeResponse.setName(employee.getName());
+        employeeResponse.setDepartment(employee.getDepartment());
+        return employeeResponse;
     }
 
-    public Employee findById(Long id) {
-        return employeeRepository.findById(id).orElse(null);
+    public EmployeeResponse findById(Long id) {
+        Employee employee = employeeRepository.findById(id).orElse(null);
+        EmployeeResponse employeeResponse = new EmployeeResponse();
+        employeeResponse.setName(employee.getName());
+        employeeResponse.setDepartment(employee.getDepartment());
+        return employeeResponse;
     }
 
-    public List<Employee> findAll() {
-        return employeeRepository.findAll();
+    public List<EmployeeResponse> findAll() {
+        List<Employee> employees = employeeRepository.findAll();
+        List<EmployeeResponse> employeeResponseList = new ArrayList<>();
+        for (Employee employee : employees) {
+            EmployeeResponse employeeResponse = new EmployeeResponse();
+            employeeResponse.setName(employee.getName());
+            employeeResponse.setDepartment(employee.getDepartment());
+            employeeResponseList.add(employeeResponse);
+        }
+        return employeeResponseList;
     }
 
     public void delete(Long id) {
@@ -33,38 +58,60 @@ public class EmployeeService {
         }
     }
 
-    public Employee update(Long id, Employee employee) {
+    public EmployeeResponse update(Long id, EmployeeRequest request) {
         Optional<Employee> optEmployee = employeeRepository.findById(id);
         if (optEmployee.isPresent()) {
             Employee uptEmployee = optEmployee.get();
-            uptEmployee.setName(employee.getName());
-            uptEmployee.setSalary(employee.getSalary());
-            uptEmployee.setEmail(employee.getEmail());
-            uptEmployee.setDepartment(employee.getDepartment());
-            return employeeRepository.save(uptEmployee);
+            uptEmployee.setName(request.getName());
+            uptEmployee.setSalary(request.getSalary());
+            uptEmployee.setEmail(request.getEmail());
+            uptEmployee.setDepartment(request.getDepartment());
+            employeeRepository.save(uptEmployee);
+            EmployeeResponse employeeResponse = new EmployeeResponse();
+            employeeResponse.setName(uptEmployee.getName());
+            employeeResponse.setDepartment(uptEmployee.getDepartment());
+            return employeeResponse;
         }
         return null;
     }
 
-    public List<Employee> findByNameContaining(String name) {
-        return  employeeRepository.findByNameContaining(name);
-    }
-
-    public List<Employee> findByDepartment(String department) {
-        return employeeRepository.findByDepartment(department);
-    }
-
-    public List<Employee> findSalaryGreaterThan(double amount) {
-        if(amount < 0) {
-            throw new IllegalArgumentException("Amount must be greater than 0");
+    public List<EmployeeResponse> findByNameContaining(String name) {
+        List<Employee> employee = employeeRepository.findByNameContaining(name);
+        List<EmployeeResponse> employeeResponseList = new ArrayList<>();
+        for (Employee emp : employee) {
+          EmployeeResponse employeeResponse =  new EmployeeResponse();
+          employeeResponse.setName(emp.getName());
+          employeeResponse.setDepartment(emp.getDepartment());
+          employeeResponseList.add(employeeResponse);
         }
-        return employeeRepository.findSalary(amount);
+        return employeeResponseList;
     }
 
-    public List<Employee> findDepartmentByQuery(String dept) {
-        if(dept == null) {
-            throw new IllegalArgumentException("Department must not be null");
+
+    public List<EmployeeResponse> findByDepartment(String department) {
+        List<Employee> employee = employeeRepository.findByDepartment(department);
+        List<EmployeeResponse> responseList = new ArrayList<>();
+        for (Employee emp : employee) {
+            EmployeeResponse employeeResponse =  new EmployeeResponse();
+            employeeResponse.setName(emp.getName());
+            employeeResponse.setDepartment(emp.getDepartment());
+            responseList.add(employeeResponse);
         }
-        return employeeRepository.findDepartmentByQuery(dept);
+        return responseList;
+
     }
+
+//    public List<Employee> findSalaryGreaterThan(double amount) {
+//        if(amount < 0) {
+//            throw new IllegalArgumentException("Amount must be greater than 0");
+//        }
+//        return employeeRepository.findSalary(amount);
+//    }
+//
+//    public List<Employee> findDepartmentByQuery(String dept) {
+//        if(dept == null) {
+//            throw new IllegalArgumentException("Department must not be null");
+//        }
+//        return employeeRepository.findDepartmentByQuery(dept);
+//    }
 }

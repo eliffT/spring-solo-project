@@ -1,5 +1,7 @@
 package com.elif.spring.controller;
 
+import com.elif.spring.dto.request.EmployeeRequest;
+import com.elif.spring.dto.response.EmployeeResponse;
 import com.elif.spring.entity.Employee;
 import com.elif.spring.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
@@ -15,23 +17,23 @@ public class EmployeeController {
     private final EmployeeService employeeService;
 
     @GetMapping
-    public List<Employee> findAll() {
+    public List<EmployeeResponse> findAll() {
         return employeeService.findAll();
     }
 
     @GetMapping("/get/{id}")
-    public Employee findById(@PathVariable(name = "id") Long id) {
+    public EmployeeResponse findById(@PathVariable(name = "id") Long id) {
         return employeeService.findById(id);
     }
 
     @PostMapping
-    public Employee save(@RequestBody Employee employee) {
-        return employeeService.save(employee);
+    public EmployeeResponse save(@RequestBody EmployeeRequest request) {
+        return employeeService.save(request);
     }
 
     @PutMapping("/put/{id}")
-    public Employee update(@PathVariable(name = "id") Long id, @RequestBody Employee employee) {
-        return employeeService.update(id, employee);
+    public EmployeeResponse update(@PathVariable(name = "id") Long id, @RequestBody EmployeeRequest request) {
+        return employeeService.update(id, request);
     }
 
     @DeleteMapping("/del/{id}")
@@ -41,24 +43,24 @@ public class EmployeeController {
 
 
     @GetMapping("/name/{name}")
-    public List<Employee> findByNameContaining(@PathVariable("name") String name) {
+    public List<EmployeeResponse> findByNameContaining(@PathVariable("name") String name) {
         return employeeService.findByNameContaining(name);
     }
 
     @GetMapping("/dept/{department}")
-    public List<Employee> findByDepartment(@PathVariable("department") String department) {
+    public List<EmployeeResponse> findByDepartment(@PathVariable("department") String department) {
         return employeeService.findByDepartment(department);
     }
-
-    @GetMapping("/salary")
-    public List<Employee> findSalaryGreaterThan(@RequestParam(value = "amount") double amount) {
-        return employeeService.findSalaryGreaterThan(amount);
-    }
-
-
-    @GetMapping("/department")
-    public List<Employee> findDepartmentByQuery(@RequestParam(value = "department") String dept){
-        return employeeService.findDepartmentByQuery(dept);
-    }
+//
+//    @GetMapping("/salary")
+//    public List<Employee> findSalaryGreaterThan(@RequestParam(value = "amount") double amount) {
+//        return employeeService.findSalaryGreaterThan(amount);
+//    }
+//
+//
+//    @GetMapping("/department")
+//    public List<Employee> findDepartmentByQuery(@RequestParam(value = "department") String dept){
+//        return employeeService.findDepartmentByQuery(dept);
+//    }
 
 }
