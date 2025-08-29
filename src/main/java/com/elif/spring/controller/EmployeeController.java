@@ -5,6 +5,7 @@ import com.elif.spring.dto.response.EmployeeResponse;
 import com.elif.spring.entity.Employee;
 import com.elif.spring.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,8 +18,9 @@ public class EmployeeController {
     private final EmployeeService employeeService;
 
     @GetMapping
-    public List<EmployeeResponse> findAll() {
-        return employeeService.findAll();
+    public Page<EmployeeResponse> findAll(@RequestParam(defaultValue = "0") int page,
+                                          @RequestParam(defaultValue = "5") int size) {
+        return employeeService.findAll(page, size);
     }
 
     @GetMapping("/get/{id}")

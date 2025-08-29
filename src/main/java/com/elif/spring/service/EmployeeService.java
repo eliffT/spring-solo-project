@@ -5,7 +5,11 @@ import com.elif.spring.dto.response.EmployeeResponse;
 import com.elif.spring.entity.Employee;
 import com.elif.spring.repository.EmployeeRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,16 +43,24 @@ public class EmployeeService {
         return employeeResponse;
     }
 
-    public List<EmployeeResponse> findAll() {
-        List<Employee> employees = employeeRepository.findAll();
-        List<EmployeeResponse> employeeResponseList = new ArrayList<>();
-        for (Employee employee : employees) {
-            EmployeeResponse employeeResponse = new EmployeeResponse();
-            employeeResponse.setName(employee.getName());
-            employeeResponse.setDepartment(employee.getDepartment());
-            employeeResponseList.add(employeeResponse);
-        }
-        return employeeResponseList;
+    public Page<EmployeeResponse> findAll(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+//        List<Employee> employees = employeeRepository.findAll();
+//        List<EmployeeResponse> employeeResponseList = new ArrayList<>();
+//        for (Employee employee : employees) {
+//            EmployeeResponse employeeResponse = new EmployeeResponse();
+//            employeeResponse.setName(employee.getName());
+//            employeeResponse.setDepartment(employee.getDepartment());
+//            employeeResponseList.add(employeeResponse);
+//        }
+//        return employeeResponseList;
+        return employeeRepository.findAll(pageable)
+                .map(employee -> {
+                    EmployeeResponse response = new EmployeeResponse();
+                    response.setName(employee.getName());
+                    response.setDepartment(employee.getDepartment());
+                    return response;
+                });
     }
 
     public void delete(Long id) {

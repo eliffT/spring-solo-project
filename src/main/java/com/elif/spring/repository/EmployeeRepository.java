@@ -1,8 +1,9 @@
 package com.elif.spring.repository;
 
 import com.elif.spring.entity.Employee;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.NativeQuery;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -20,4 +21,6 @@ public interface EmployeeRepository extends JpaRepository<Employee,Long> {
 
     @Query(value = "SELECT * FROM employee WHERE department = :dept", nativeQuery = true)
     List<Employee> findDepartmentByQuery(@Param("dept")  String dept);
+
+    Page<Employee> findAll(Pageable pageable);
 }
